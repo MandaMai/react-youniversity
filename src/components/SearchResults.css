@@ -181,11 +181,13 @@ input.number-filter-input.form-control{
 
     h3.itemTitle{
         padding-right: 0;
-        margin-left: 20px;
+        margin-left: 10px;
         margin-right: 5px;
+        font-size: 16px;
     }
     h3.item{
         margin-left: -10px;
         margin-right: 5px;
+        font-size: 12px;
     }
 }
