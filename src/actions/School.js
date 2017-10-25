@@ -1,42 +1,44 @@
 import request from 'superagent';
 
+// constants to be used for getSchools API call
 const baseUrl = 'https://api.data.gov/ed/collegescorecard/v1/schools.json?';
 const fields = "&_fields=id,school.name,school.state,2015.cost.avg_net_price.overall,2015.student.grad_students,2015.cost.tuition.in_state,2015.cost.tuition.out_of_state,2015.cost.tuition.program_year,school.state_fips,school.locale,school.degrees_awarded.predominant,school.degrees_awarded.highest,2015.cost.attendance.academic_year,2015.student.size,2015.academics.program_available.bachelors,2015.academics.program_available.assoc,2015.admissions.admission_rate.overall,school.ownership,school.school_url"
 const sortItems  = "&sort=2015.cost.avg_net_price.overall:desc";
 const perPage = "&_per_page=100";
 
-//create api call string
+// get the ley from the command line entry to be used for API call
 function generateCredentials(){
   let publicKey = process.env.REACT_APP_API_PUBLIC_KEY;
 
   return publicKey;
 }
 
-//actually doing the call
+// function that does the actual API call to get the list of colleges based on user preferences
 export function getSchools(stateFilter = "",programFilter = ""){
   
-  //inputs from API here
+  // initialize some variables to be used in search string for API call
   let search = "";
   let stateSearch = "";
   let programSearch = "";
   let costSearch = "";
 
-  //will need one of these for each filter
+  // used to filter the API call based on list of states in user preferences
   if(stateFilter){
     stateSearch = "school.state="+ stateFilter;
-    //will need to comma parse these out
   }
+  // used to filter the API call based on choice of Major in user preferences
   if(programFilter){
     programSearch = "&2015.academics.program.degree."+programFilter+"=1";
-    //will need to comma parse these out
   }
 
+  //  build search string for API call with state and program/major filters
   search=stateSearch+programSearch;
   
   return dispatch => {
     request.get(`${baseUrl}${search}${fields}${sortItems}${perPage}&api_key=${generateCredentials()}`).end(
       (error, response) => {
         if(!error) {
+          // succuessful API call, so we can trigger a state change on schools
           dispatch({ type: `SEARCHED_SCHOOLS`, schools: response.body.results });
         }
       }
@@ -44,9 +46,10 @@ export function getSchools(stateFilter = "",programFilter = ""){
   };
 }
 
+// function to make API call and update school details object to present in School Details component
 export function schoolDetails(schoolID){
     
-    //inputs from API here
+    // initialize some variables to be used for API call
     
     let search = "id=" + schoolID;
 
@@ -59,6 +62,7 @@ export function schoolDetails(schoolID){
       request.get(`${baseUrl}${search}${fields}&api_key=${generateCredentials()}`).end(
         (error, response) => {
           if(!error) {
+            // succuessful API call, so we can trigger a state change on schooldetails
             dispatch({ type: `SCHOOL_DETAILS`, schooldetails: response.body.results });
           }
         }

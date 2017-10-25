@@ -8,21 +8,25 @@ import './NavLogin.css'
 
 class NavLogin extends Component {
     
+    // method to call login function with info entered in NabBar.Form
     loginUser = event => {
         event.preventDefault();
         let form = event.target
   
         let user = new User();
+        // place from data into the user before calling login
         user.username = form.username.value;
         user.password = form.password.value
   
         this.props.login(user)
+            // using .then here to wait for promise back from login BEFORE routing to SearchResults
             .then( result => {
                 browserHistory.push('/searchresults');
             })
         
     }
 
+    // method to call logout and rout back to home page
     logoutUser = event => {
         event.preventDefault()
         this.props.logout()
@@ -31,10 +35,12 @@ class NavLogin extends Component {
   
     render() {
         
+        // check if we have a currentUser to determine if we are already logged in
         if(this.props.currentUser){
             
           let user = this.props.currentUser;
   
+          // we are logged in, so let's render the "normal" navigation bar
           return (
               <div>
                 <Navbar.Text>
@@ -54,6 +60,7 @@ class NavLogin extends Component {
   
         }
 
+        // we are NOT logged in, so let's render the login version of the navigation bar
         return (
             <div>
                 <form onSubmit={this.loginUser}>
