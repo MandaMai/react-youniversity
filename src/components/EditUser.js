@@ -98,6 +98,7 @@ class EditUser extends Component {
 
   render() {
 
+    // success message for creating a new user
     let statusMessage = "";
     if(this.props.updatedUser){
         statusMessage =  (

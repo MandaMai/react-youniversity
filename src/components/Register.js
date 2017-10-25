@@ -144,37 +144,8 @@ class Register extends Component {
                     name="password"
                 />
                 
-<br />
+        <br />
         <label><h4><b>Preferences</b></h4> </label>
-
-          {/* <table>
-            <tr>
-                <th><label>States (select one or more)</label></th>
-                <th><label>Area of Study (select one)</label></th>
-            </tr>
-
-            <tr class="cells">
-             <td>     
-                <div className="form-group">
-                <select multiple="true" name="location" className="selections">
-                    {states.map(this.renderOptions)}
-                </select> 
-                </div>
-              </td>
-              <td>
-                <div className="form-group">
-                    <select multiple="true" name="major" className="selections">
-                    {majors.map(this.renderOptions)}
-                    </select>
-                </div>      
-           
-              </td>
-
-       
-            
-              </tr>
-        </table> */}
-
 
             <label>Major</label>
                 <div className="form-group">
